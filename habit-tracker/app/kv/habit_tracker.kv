@@ -1,0 +1,38 @@
+#:import MDFloatingActionButton kivymd.uix.button.MDFloatingActionButton
+#:import MDTopAppBar kivymd.uix.toolbar.MDTopAppBar
+#:import MDIconButton kivymd.uix.button.MDIconButton
+#:import MDCard kivymd.uix.card.MDCard
+#:import MDLabel kivymd.uix.label.MDLabel
+#:import MDBoxLayout kivymd.uix.boxlayout.MDBoxLayout
+#:import MDScrollView kivymd.uix.scrollview.MDScrollView
+#:import dp kivy.metrics.dp
+
+<HabitListScreen>:
+    name: "habit_list"
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "Мои привычки"
+            right_action_items: [["cog", lambda x: root.open_settings()]]
+
+        MDScrollView:
+            MDBoxLayout:
+                orientation: "vertical"
+                adaptive_height: True
+                padding: "16dp"
+                spacing: "16dp"
+
+                # Контейнер для привычек
+                MDBoxLayout:
+                    id: habit_list
+                    orientation: "vertical"
+                    adaptive_height: True
+                    spacing: "12dp"
+
+        MDFloatingActionButton:
+            icon: "plus"
+            md_bg_color: app.theme_cls.bg_dark
+            pos_hint: {"right": 1.0, "bottom": 0.5}
+            on_release: root.add_habit()

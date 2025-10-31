@@ -1,0 +1,173 @@
+<SettingsScreen>:
+    name: "settings"
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "Настройки"
+            elevation: 0
+            left_action_items: [["arrow-left", lambda x: root.go_back()]]
+
+        ScrollView:
+            MDBoxLayout:
+                orientation: "vertical"
+                adaptive_height: True
+                padding: "16dp"
+                spacing: "16dp"
+
+                # Внешний вид
+                MDLabel:
+                    text: "Внешний вид"
+                    font_style: "H6"
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+                # Карточка с настройкой темы
+                MDCard:
+                    orientation: "vertical"
+                    padding: "16dp"
+                    size_hint_y: None
+                    height: "100dp"
+                    elevation: 1
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        padding: "8dp"
+                        spacing: "8dp"
+                        
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            size_hint_x: 0.8
+
+                            MDLabel:
+                                text: "Темная тема"
+                                halign: "left"
+                                font_style: "Subtitle1"
+
+                            MDLabel:
+                                text: "Переключение между светлой и темной темой"
+                                font_style: "Caption"
+                                theme_text_color: "Secondary"
+
+                        MDSwitch:
+                            id: dark_mode_switch
+                            theme_text_color: "Custom"
+                            text_color: app.theme_cls.text_color
+                            active: app.theme_cls.theme_style == "Dark"
+                            on_active: app.theme_cls.theme_style = "Dark" if self.active else "Light"
+
+
+                # Карточка с выбором цвета
+                MDCard:
+                    orientation: "vertical"
+                    padding: "16dp"
+                    size_hint_y: None
+                    height: "140dp"
+                    elevation: 1
+
+                    MDLabel:
+                        text: "Акцентный цвет"
+                        font_style: "Subtitle1"
+
+                    MDLabel:
+                        text: "Выберите основной цвет приложения"
+                        font_style: "Caption"
+                        theme_text_color: "Secondary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        spacing: "8dp"
+                        size_hint_y: None
+                        height: "48dp"
+
+                        MDFillRoundFlatIconButton:
+                            text: ""
+                            icon: "check" if root.primary_color == "#6750A4" else ""
+                            md_bg_color: "#6750A4"
+                            on_release: root.set_primary_color("#6750A4")
+                            size_hint_x: 1
+
+                        MDFillRoundFlatIconButton:
+                            text: ""
+                            icon: "check" if root.primary_color == "#4CAF50" else ""
+                            md_bg_color: "#4CAF50"
+                            on_release: root.set_primary_color("#4CAF50")
+                            size_hint_x: 1
+
+                        MDFillRoundFlatIconButton:
+                            text: ""
+                            icon: "check" if root.primary_color == "#2196F3" else ""
+                            md_bg_color: "#2196F3"
+                            on_release: root.set_primary_color("#2196F3")
+                            size_hint_x: 1
+
+                        MDFillRoundFlatIconButton:
+                            text: ""
+                            icon: "check" if root.primary_color == "#FF9800" else ""
+                            md_bg_color: "#FF9800"
+                            on_release: root.set_primary_color("#FF9800")
+                            size_hint_x: 1
+
+                # Резервные копии
+                MDLabel:
+                    text: "Резервные копии"
+                    font_style: "H6"
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+                MDCard:
+                    orientation: "vertical"
+                    padding: "16dp"
+                    size_hint_y: None
+                    height: "100dp"
+                    elevation: 1
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        spacing: "8dp"
+
+                        MDFillRoundFlatButton:
+                            text: "Экспорт данных"
+                            icon: "export"
+                            on_release: root.export_data()
+                            size_hint_x: 0.5
+
+                        MDFillRoundFlatButton:
+                            text: "Импорт данных"
+                            icon: "import"
+                            on_release: root.import_data()
+                            size_hint_x: 0.5
+
+                # О приложении
+                MDLabel:
+                    text: "О приложении"
+                    font_style: "H6"
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+                MDCard:
+                    orientation: "vertical"
+                    padding: "16dp"
+                    size_hint_y: None
+                    height: "120dp"
+                    elevation: 1
+
+                    MDLabel:
+                        text: "Версия 1.0.0"
+                        font_style: "Subtitle1"
+
+                    MDLabel:
+                        text: "Трекер привычек"
+                        font_style: "Caption"
+                        theme_text_color: "Secondary"
+
+                    MDLabel:
+                        text: "Политика конфиденциальности"
+                        font_style: "Body1"
+                        theme_text_color: "Primary"
+                        on_touch_down:
+                            if self.collide_point(*args[1].pos): root.show_privacy_policy()

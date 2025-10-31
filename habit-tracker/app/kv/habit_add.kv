@@ -1,0 +1,123 @@
+#:import MDTextField kivymd.uix.textfield.MDTextField
+#:import MDBoxLayout kivymd.uix.boxlayout.MDBoxLayout
+#:import MDLabel kivymd.uix.label.MDLabel
+#:import MDIconButton kivymd.uix.button.MDIconButton
+#:import MDRaisedButton kivymd.uix.button.MDRaisedButton
+#:import MDFillRoundFlatIconButton kivymd.uix.button.MDFillRoundFlatIconButton
+
+<HabitAddScreen>:
+    name: "habit_add"
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        # Верхняя панель (App Bar)
+        MDBoxLayout:
+            size_hint_y: None
+            height: "56dp"
+            padding: "8dp"
+            spacing: "8dp"
+
+            MDIconButton:
+                icon: "arrow-left"
+                on_release: root.go_back()
+
+            MDLabel:
+                text: "Новая привычка"
+                halign: "center"
+                font_style: "H6"
+
+            MDIconButton:
+                icon: "check"
+                on_release: root.save_habit()
+
+        # Прокручиваемая часть
+        ScrollView:
+            MDBoxLayout:
+                orientation: "vertical"
+                adaptive_height: True
+                padding: "16dp"
+                spacing: "16dp"
+
+
+                # Название привычки
+                MDTextField:
+                    id: habit_title
+                    hint_text: "Название привычки"
+                    helper_text: "Например: Читать 20 минут"
+                    helper_text_mode: "on_focus"
+                    size_hint_x: 1
+                    size_hint_y: None
+                    height: "56dp"
+                    multiline: False
+                    unfocus_on_touch: False  # ← добавь эту строку
+
+
+                # Описание
+                MDTextField:
+                    id: habit_description
+                    hint_text: "Описание"
+                    multiline: True
+                    size_hint_x: 1
+                    size_hint_y: None
+                    height: "100dp"
+                    unfocus_on_touch: False  # ← добавь сюда тоже
+
+                # Повторять
+                MDLabel:
+                    text: "Повторять"
+                    font_style: "Subtitle1"
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    spacing: "12dp"
+                    adaptive_height: True
+
+                    MDRaisedButton:
+                        text: "Ежедневно"
+                        on_release: root.select_repeat("daily")
+                    MDRaisedButton:
+                        text: "Еженедельно"
+                        on_release: root.select_repeat("weekly")
+
+                # Цель
+                MDLabel:
+                    text: "Цель"
+                    font_style: "Subtitle1"
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    spacing: "12dp"
+                    adaptive_height: True
+
+                    MDRaisedButton:
+                        text: "Количество дней"
+                        on_release: root.select_goal("days")
+                    MDRaisedButton:
+                        text: "Количество раз"
+                        on_release: root.select_goal("times")
+
+                MDBoxLayout:
+                    spacing: "8dp"
+                    adaptive_height: True
+
+                    MDTextField:
+                        id: goal_value
+                        hint_text: "30"
+                        input_filter: "int"
+                        max_text_length: 3
+                        size_hint_x: None
+                        width: "100dp"
+                        size_hint_y: None
+                        height: "56dp"
+
+                    MDLabel:
+                        id: goal_unit
+                        text: "дней"
+                        valign: "center"
+
+                # Кнопка напоминания
+                MDFillRoundFlatIconButton:
+                    text: "Установить напоминание"
+                    icon: "bell"
+                    size_hint_y: None
+                    height: "48dp"
+                    on_release: root.set_reminder()

@@ -1,0 +1,168 @@
+<HabitStatsScreen>:
+    name: "habit_stats"
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        # App Bar
+        MDTopAppBar:
+            title: root.habit_name
+            elevation: 2
+            left_action_items: [["arrow-left", lambda x: root.go_back()]]
+            right_action_items: [["pencil", lambda x: root.edit_habit()]]
+            size_hint_y: None
+            height: "56dp"
+
+        ScrollView:
+            bar_width: 4
+            scroll_type: ["bars", "content"]
+
+            MDBoxLayout:
+                orientation: "vertical"
+                padding: "16dp"
+                spacing: "20dp"
+                size_hint_y: None
+                height: self.minimum_height  # Критически важно!
+
+                # Статистика - фиксированная высота
+                MDGridLayout:
+                    cols: 3
+                    spacing: "12dp"
+                    size_hint_y: None
+                    height: "100dp"
+
+                    MDCard:
+                        radius: 12
+                        padding: "8dp"
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            spacing: "4dp"
+                            MDLabel:
+                                text: str(root.current_streak)
+                                font_style: "H5"
+                                halign: "center"
+                                theme_text_color: "Custom"
+                                text_color: app.theme_cls.primary_color
+                                size_hint_y: None
+                                height: self.texture_size[1]
+                            MDLabel:
+                                text: "Текущая серия"
+                                font_style: "Caption"
+                                halign: "center"
+                                size_hint_y: None
+                                height: self.texture_size[1]
+
+                    MDCard:
+                        radius: 12
+                        padding: "8dp"
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            spacing: "4dp"
+                            MDLabel:
+                                text: str(root.longest_streak)
+                                font_style: "H5"
+                                halign: "center"
+                                theme_text_color: "Custom"
+                                text_color: app.theme_cls.primary_color
+                                size_hint_y: None
+                                height: self.texture_size[1]
+                            MDLabel:
+                                text: "Рекорд"
+                                font_style: "Caption"
+                                halign: "center"
+                                size_hint_y: None
+                                height: self.texture_size[1]
+
+                    MDCard:
+                        radius: 12
+                        padding: "8dp"
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            spacing: "4dp"
+                            MDLabel:
+                                text: str(root.total_done)
+                                font_style: "H5"
+                                halign: "center"
+                                theme_text_color: "Custom"
+                                text_color: app.theme_cls.primary_color
+                                size_hint_y: None
+                                height: self.texture_size[1]
+                            MDLabel:
+                                text: "Всего"
+                                font_style: "Caption"
+                                halign: "center"
+                                size_hint_y: None
+                                height: self.texture_size[1]
+
+                # Календарь выполнения - фиксированная высота
+                MDBoxLayout:
+                    orientation: "vertical"
+                    spacing: "8dp"
+                    size_hint_y: None
+                    height: "220dp"  # Фиксированная высота!
+
+                    MDLabel:
+                        text: "Календарь выполнения"
+                        font_style: "Subtitle1"
+                        size_hint_y: None
+                        height: "24dp"
+
+                    MDCard:
+                        padding: "12dp"
+                        radius: 12
+                        size_hint_y: 1
+                        ScrollView:
+                            do_scroll_x: False
+                            MDGridLayout:
+                                id: calendar_grid
+                                cols: 7
+                                spacing: "4dp"
+                                size_hint_y: None
+                                height: self.minimum_height
+                                padding: "4dp"
+
+                # Прогресс за 30 дней - фиксированная высота
+                MDBoxLayout:
+                    orientation: "vertical"
+                    spacing: "8dp"
+                    size_hint_y: None
+                    height: "250dp"
+
+                    MDLabel:
+                        text: "Прогресс за 30 дней"
+                        font_style: "Subtitle1"
+                        size_hint_y: None
+                        height: "24dp"
+
+                    MDCard:
+                        padding: "12dp"
+                        radius: 12
+                        size_hint_y: 1
+                        BoxLayout:
+                            id: chart_container
+
+                # История выполнения - фиксированная высота
+                MDBoxLayout:
+                    orientation: "vertical"
+                    spacing: "8dp"
+                    size_hint_y: None
+                    height: "200dp"
+
+                    MDLabel:
+                        text: "История выполнения"
+                        font_style: "Subtitle1"
+                        size_hint_y: None
+                        height: "24dp"
+
+                    MDCard:
+                        padding: "12dp"
+                        radius: 12
+                        size_hint_y: 1
+                        ScrollView:
+                            MDBoxLayout:
+                                id: history_list
+                                orientation: "vertical"
+                                spacing: "8dp"
+                                adaptive_height: True
+                                size_hint_y: None
+                                height: self.minimum_height

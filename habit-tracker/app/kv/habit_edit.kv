@@ -1,0 +1,102 @@
+#:import MDTextField kivymd.uix.textfield.MDTextField
+#:import MDBoxLayout kivymd.uix.boxlayout.MDBoxLayout
+#:import MDLabel kivymd.uix.label.MDLabel
+#:import MDRaisedButton kivymd.uix.button.MDRaisedButton
+#:import MDFillRoundFlatIconButton kivymd.uix.button.MDFillRoundFlatIconButton
+
+<HabitEditScreen>:
+    name: "habit_edit"
+    habit_repeat: "Ежедневно"
+
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: 0
+
+        # Верхняя панель - фиксированная
+        MDTopAppBar:
+            title: "Редактировать привычку"
+            elevation: 2
+            left_action_items: [["arrow-left", lambda x: root.go_back()]]
+            right_action_items: [["delete", lambda x: root.delete_habit()]]
+            size_hint_y: None
+            height: "56dp"
+
+        # Контент с прокруткой
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            bar_width: 4
+
+            MDBoxLayout:
+                orientation: "vertical"
+                adaptive_height: True
+                padding: "24dp"
+                spacing: "24dp"
+                size_hint_y: None
+                height: self.minimum_height
+
+                # Название привычки
+                MDLabel:
+                    text: "Название привычки"
+                    font_style: "Subtitle1"
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+                MDTextField:
+                    id: habit_title
+                    hint_text: "Введите название привычки"
+                    helper_text: "Например: Читать 20 минут"
+                    helper_text_mode: "on_focus"
+                    size_hint_y: None
+                    height: "64dp"
+                    mode: "rectangle"
+
+                # Цель привычки
+                MDLabel:
+                    text: "Цель привычки"
+                    font_style: "Subtitle1"
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+                MDTextField:
+                    id: habit_description
+                    hint_text: "Опишите цель привычки"
+                    helper_text: "Например: Развивать мышление, улучшать концентрацию"
+                    multiline: True
+                    size_hint_y: None
+                    height: "120dp"
+                    mode: "rectangle"
+
+                # Повторять
+                MDLabel:
+                    text: "Повторять"
+                    font_style: "Subtitle1"
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    spacing: "12dp"
+                    size_hint_y: None
+                    height: "48dp"
+
+                    MDRaisedButton:
+                        id: daily_btn
+                        text: "Ежедневно"
+                        size_hint_x: 0.5
+                        on_release: root.set_repeat("Ежедневно")
+
+                    MDRaisedButton:
+                        id: weekly_btn
+                        text: "Еженедельно"
+                        size_hint_x: 0.5
+                        on_release: root.set_repeat("Еженедельно")
+
+                # Кнопка сохранения
+                MDFillRoundFlatIconButton:
+                    text: "Сохранить изменения"
+                    icon: "content-save"
+                    size_hint: None, None
+                    size: "220dp", "48dp"
+                    pos_hint: {"center_x": 0.5}
+                    on_release: root.save_edited_habit()

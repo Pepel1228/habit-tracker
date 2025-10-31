@@ -1,0 +1,167 @@
+#:import MDBoxLayout kivymd.uix.boxlayout.MDBoxLayout
+#:import MDLabel kivymd.uix.label.MDLabel
+#:import MDTextField kivymd.uix.textfield.MDTextField
+#:import MDSwitch kivymd.uix.selectioncontrol.MDSwitch
+#:import MDRaisedButton kivymd.uix.button.MDRaisedButton
+#:import MDIconButton kivymd.uix.button.MDIconButton
+
+<RemindersScreen>:
+    name: "reminders"
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        # Верхняя панель
+        MDBoxLayout:
+            size_hint_y: None
+            height: "56dp"
+            padding: "8dp"
+            spacing: "8dp"
+
+            MDIconButton:
+                icon: "arrow-left"
+                on_release: root.go_back()
+
+            MDLabel:
+                text: "Напоминания"
+                halign: "center"
+                font_style: "H6"
+
+        ScrollView:
+            MDBoxLayout:
+                orientation: "vertical"
+                adaptive_height: True
+                padding: "16dp"
+                spacing: "20dp"
+
+                # Время
+                MDLabel:
+                    text: "Время"
+                    font_style: "Subtitle1"
+                MDTextField:
+                    id: reminder_time
+                    hint_text: "08:00"
+                    text: root.reminder_time
+                    size_hint_x: None
+                    width: "120dp"
+                    mode: "rectangle"
+                    on_text: root.set_time(self.text)
+
+                # Переключатель включения
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    size_hint_y: None
+                    height: "48dp"
+                    MDLabel:
+                        text: "Включить напоминания"
+                        valign: "center"
+                    MDSwitch:
+                        id: reminder_enabled
+                        active: root.reminder_enabled
+                        on_active: root.toggle_reminder(self.active)
+
+                # Повторение
+                MDLabel:
+                    text: "Повторение"
+                    font_style: "Subtitle1"
+                MDBoxLayout:
+                    spacing: "8dp"
+                    adaptive_height: True
+                    MDRaisedButton:
+                        text: "Каждый день"
+                        on_release: root.set_repeat_option("daily")
+                    MDRaisedButton:
+                        text: "По рабочим дням"
+                        on_release: root.set_repeat_option("weekdays")
+                    MDRaisedButton:
+                        text: "По выходным"
+                        on_release: root.set_repeat_option("weekends")
+                    MDRaisedButton:
+                        text: "Выбрать дни недели"
+                        on_release: root.set_repeat_option("custom")
+
+                # Дни недели (по умолчанию выключены)
+                MDBoxLayout:
+                    id: weekdays_box
+                    spacing: "4dp"
+                    adaptive_height: True
+
+                    MDRaisedButton:
+                        id: day_mon
+                        text: "Пн"
+                        disabled: True
+                        on_release: root.toggle_day("Mon")
+                    MDRaisedButton:
+                        id: day_tue
+                        text: "Вт"
+                        disabled: True
+                        on_release: root.toggle_day("Tue")
+                    MDRaisedButton:
+                        id: day_wed
+                        text: "Ср"
+                        disabled: True
+                        on_release: root.toggle_day("Wed")
+                    MDRaisedButton:
+                        id: day_thu
+                        text: "Чт"
+                        disabled: True
+                        on_release: root.toggle_day("Thu")
+                    MDRaisedButton:
+                        id: day_fri
+                        text: "Пт"
+                        disabled: True
+                        on_release: root.toggle_day("Fri")
+                    MDRaisedButton:
+                        id: day_sat
+                        text: "Сб"
+                        disabled: True
+                        on_release: root.toggle_day("Sat")
+                    MDRaisedButton:
+                        id: day_sun
+                        text: "Вс"
+                        disabled: True
+                        on_release: root.toggle_day("Sun")
+
+                # Вибрация
+                MDBoxLayout:
+                    size_hint_y: None
+                    height: "48dp"
+                    MDLabel:
+                        text: "Вибрация"
+                        valign: "center"
+                    MDSwitch:
+                        id: vibration_switch
+                        active: root.vibration_enabled
+                        on_active: root.toggle_vibration(self.active)
+
+                # Звук
+                MDBoxLayout:
+                    size_hint_y: None
+                    height: "48dp"
+                    MDLabel:
+                        text: "Звук"
+                        valign: "center"
+                    MDSwitch:
+                        id: sound_switch
+                        active: root.sound_enabled
+                        on_active: root.toggle_sound(self.active)
+
+                # Текст напоминания
+                MDTextField:
+                    id: reminder_text
+                    hint_text: "Текст напоминания"
+                    text: root.reminder_text
+                    multiline: False
+                    size_hint_y: None
+                    height: "56dp"
+                    mode: "rectangle"
+                    on_text: root.reminder_text = self.text
+
+        # Нижняя кнопка
+        MDRaisedButton:
+            text: "Сохранить настройки"
+            size_hint_x: 1
+            size_hint_y: None
+            height: "56dp"
+            md_bg_color: app.theme_cls.bg_normal
+            on_release: root.save_settings()
